@@ -45,7 +45,7 @@ minilibx:
 clean:
 	@make -s clean -C ${LIBFT_DIR}
 	@make -s clean -C ${MINILIBX_DIR}
-	@rm -fr ${NAME}
+	@rm -fr ${OBJS}
 
 fclean: clean
 	@make -s fclean -C ${LIBFT_DIR}
