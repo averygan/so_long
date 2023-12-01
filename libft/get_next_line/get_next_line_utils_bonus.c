@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc_gnl(size_t nmemb, size_t size)
 {
 	void	*ptr;
 	char	*tmp;

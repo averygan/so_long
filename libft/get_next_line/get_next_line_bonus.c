@@ -49,7 +49,7 @@ static char	*ft_read(int fd, char *res)
 	char	*buf;
 	int		bytes_read;
 
-	buf = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	buf = ft_calloc_gnl(BUFFER_SIZE + 1, sizeof(char));
 	if (!buf)
 		return (NULL);
 	bytes_read = 1;
@@ -57,7 +57,7 @@ static char	*ft_read(int fd, char *res)
 	{
 		bytes_read = read(fd, buf, BUFFER_SIZE);
 		if (!res)
-			res = ft_calloc(1, sizeof(char));
+			res = ft_calloc_gnl(1, sizeof(char));
 		if (bytes_read == -1)
 		{
 			free(buf);

@@ -11,11 +11,14 @@
 # **************************************************************************** #
 
 NAME	= so_long
-SRCS	= srcs/so_long.c
+SRCS	= srcs/so_long.c srcs/utils.c
 OBJS 	= ${SRCS:.c=.o}
-CC		= gcc
+CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g
 RM		= rm -fr
+
+#includes
+INC		= -I ./includes/\
 
 #libft
 LIBFT_DIR = ./libft
