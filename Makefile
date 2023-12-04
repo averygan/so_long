@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME	= so_long
-SRCS	= srcs/so_long.c srcs/utils.c
+SRCS	= srcs/so_long.c srcs/utils.c srcs/assets.c srcs/render.c srcs/map.c
 OBJS 	= ${SRCS:.c=.o}
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g

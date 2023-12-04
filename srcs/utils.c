@@ -12,13 +12,29 @@
 
 #include "../inc/so_long.h"
 
-int error_handler(int err)
+// Fuction to init struct variables
+void struct_init(t_game *game)
 {
-	if (err == 0)
-		perror("Error\nInvalid map.");
-	exit(errno);
+	game->mlx = NULL;
+	game->window = NULL;
+	game->width = 0;
+	game->height = 0;
 }
 
+// Function to handle errors and exit
+int error_handler(int err)
+{
+	ft_putstr_fd("Error\n", 2);
+	if (err == 0)
+		ft_putstr_fd("Invalid map.\n", 2);
+	if (err == 1)
+		ft_putstr_fd("Argument is not a .ber file.\n", 2);
+	if (err == 2)
+		ft_putstr_fd("Map does not meet requirements.\n", 2);
+	exit(0);
+}
+
+// Exit: TODO teardown images and window
 int exit_handler(void)
 {
 	exit(0);

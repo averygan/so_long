@@ -32,33 +32,44 @@
 #  define ON_DESTROY 17
 #endif
 
+// Define path for assets
+# define WALL_PATH	"./assets/tiles/tree.xpm"
+# define FLOOR_PATH	"./assets/tiles/floor.xpm"
+# define SPRITE_SIZE 32
+
 // Struct to store data for images
 typedef struct	s_img 
 {
 	void	*ptr;
-	char	*addr;
 	int		bpp;
 	int		line_length;
+	int		x;
+	int		y;
 	int		endian;
 }	t_img;
-
-typedef struct s_map
-{
-	t_img side;
-	t_img tile;
-	t_img wall;
-}	t_map;
 
 // Struct for game attributes
 typedef struct s_game 
 {
-	void *mlx;
-	void *window;
-	int	width;
-	int height;
-	char **map_arr;
-	t_map map;
+	void	*mlx;
+	void	*window;
+	int		width;
+	int 	height;
+	char	**map_arr;
+	int		coin;
+	t_img	wall;
+	t_img	floor;
+	int start[2];
+	int exit[2];
 }	t_game;
+
+typedef struct s_player
+{
+	int coins_collected;
+	int position[2];
+	int win;
+	int lose;
+} t_player;
 
 // Stores possible legal moves
 typedef struct s_moves
@@ -69,9 +80,25 @@ typedef struct s_moves
 	int right;
 }	t_moves;
 
+// Map validation functions
+
+// Game functions
+int game_init(t_game *game);
+void set_window_size(t_game *game);
+
 // Utils functions
 int error_handler(int err);
 int exit_handler(void);
+void struct_init(t_game *game);
+
+// Map functions
+int map_init(char **argv, t_game *game);
+void map_to_window(t_game *game, int y, int x);
+void render_map(t_game *game);
+
+// Assets functions
+t_img load_image(void *mlx, char *path);
+void init_assets(t_game *game);
 
 #endif
 
