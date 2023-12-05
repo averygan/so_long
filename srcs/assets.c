@@ -24,7 +24,12 @@ t_img load_image(void *mlx, char *path)
 // Function to initialize all game assets
 void init_assets(t_game *game)
 {
-	game->wall = load_image(game->mlx, WALL_PATH);
-	game->floor = load_image(game->mlx, FLOOR_PATH);
+	game->map.wall = load_image(game->mlx, WALL_PATH);
+	game->map.floor = load_image(game->mlx, FLOOR_PATH);
+	game->map.hero[0] = load_image(game->mlx, HERO_U_PATH);
+	game->map.hero[1] = load_image(game->mlx, HERO_D_PATH);
+	game->map.hero[2] = load_image(game->mlx, HERO_L_PATH);
+	game->map.hero[3] = load_image(game->mlx, HERO_R_PATH);
+	game->map.collectible = load_image(game->mlx, BOMB_PATH);
 	return ;
 }

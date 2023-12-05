@@ -23,37 +23,38 @@ int ber_checker(char *filename)
 	return (0);
 }
 
-// Checks if map is rectangle
-void rectangle_checker(char **map)
+void init_map_struct(t_game *game)
 {
-	int y;
-	int x;
-	int width;
-
-	y = 0;
-	width = ft_strlen(map[y]);
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-			x++;
-		if (x != width)
-			error_handler(2);
-		y++;
-	}
-	if (y == width)
-		error_handler(2);
+	game->map.valid_path = 0;
+	game->map.valid_path = 0;
+	game->map.valid_collectibles = 0;
+	game->map.valid_start = 0;
+	game->map.valid_exit = 0;
+	game->map.c_visible = 0;
 }
 
-// Checks if map is surrounded by walls
+// Determine player starting position
+void player_pos(t_game *game)
+{
+	t_coord coord;
 
-// Checks if there is a valid path
-
-// Checks if map has at least 1 exit, 1 collectible and 1 starting position
-// int map_validation(char **map_arr)
-// {
-
-// }
+	coord.y = 0;
+	while (game->map_arr[coord.y])
+	{
+		coord.x = 0;
+		while (game->map_arr[coord.y][coord.x])
+		{
+			if (game->map_arr[coord.y][coord.x] == 'P')
+			{
+				game->player.pos.x = coord.x;
+				game->player.pos.y = coord.y;
+				return ;
+			}
+			coord.x++;
+		}
+		coord.y++;
+	}
+}
 
 // Function to initialize map
 // -> Read .ber file
@@ -67,44 +68,19 @@ int map_init(char **argv, t_game *game)
 	int bytes_read;
 
 	ber_checker(argv[1]);
+	init_map_struct(game);
 	fd = open(argv[1], O_RDONLY);
 	buf = ft_calloc(BUF_SIZE + 1, sizeof(char));
+	if (!buf)
+		return (-1);
 	bytes_read = read(fd, buf, BUF_SIZE);
 	if (bytes_read == -1)
 		return(free(buf), -1);
 	// Alloc map
 	game->map_arr = ft_split(buf, '\n');
-	free(buf);
 	// Error handling for map
-	rectangle_checker(game->map_arr);
+	set_window_size(game);
+	map_validation(game, buf);
+	free(buf);
 	return (0);
-}
-
-// Push map images to window
-void map_to_window(t_game *game, int y, int x)
-{
-	if (game->map_arr[y][x] == '1')
-		mlx_put_image_to_window(game->mlx, game->window, game->wall.ptr, (x * SPRITE_SIZE), (y * SPRITE_SIZE));
-	else
-		mlx_put_image_to_window(game->mlx, game->window, game->floor.ptr, (x * SPRITE_SIZE), (y * SPRITE_SIZE));
-}
-
-// If map is valid, render map
-void render_map(t_game *game)
-{
-	int x;
-	int y;
-
-	y = 0;
-	while (game->map_arr[y])
-	{
-		x = 0;
-		while (game->map_arr[y][x])
-		{
-			map_to_window(game, y, x);
-			x++;
-		}
-		y++;
-	}
-	return ;
 }

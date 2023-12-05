@@ -17,8 +17,6 @@ void struct_init(t_game *game)
 {
 	game->mlx = NULL;
 	game->window = NULL;
-	game->width = 0;
-	game->height = 0;
 }
 
 // Function to handle errors and exit
@@ -31,6 +29,10 @@ int error_handler(int err)
 		ft_putstr_fd("Argument is not a .ber file.\n", 2);
 	if (err == 2)
 		ft_putstr_fd("Map does not meet requirements.\n", 2);
+	if (err == 3)
+		ft_putstr_fd("Map needs to be surrounded by walls.\n", 2);
+	if (err == 4)
+		ft_putstr_fd("Map does not have a valid path.\n", 2);
 	exit(0);
 }
 

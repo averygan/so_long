@@ -16,7 +16,6 @@
 int game_init(t_game *game)
 {
 	struct_init(game);
-	set_window_size(game);
 	game->mlx = mlx_init();
 	game->window = mlx_new_window(game->mlx, game->width * SPRITE_SIZE, game->height * SPRITE_SIZE, "so_long");
 	init_assets(game);

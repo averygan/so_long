@@ -33,9 +33,21 @@
 #endif
 
 // Define path for assets
-# define WALL_PATH	"./assets/tiles/tree.xpm"
+# define WALL_PATH	"./assets/tiles/wall.xpm"
 # define FLOOR_PATH	"./assets/tiles/floor.xpm"
+# define HERO_L_PATH "./assets/sprite/hero_l.xpm"
+# define HERO_R_PATH "./assets/sprite/hero_r.xpm"
+# define HERO_U_PATH "./assets/sprite/hero_u.xpm"
+# define HERO_D_PATH "./assets/sprite/hero_d.xpm"
+# define BOMB_PATH "./assets/sprite/bomb.xpm"
+
 # define SPRITE_SIZE 32
+
+typedef struct s_coord
+{
+	int x;
+	int y;
+}	t_coord;
 
 // Struct to store data for images
 typedef struct	s_img 
@@ -48,6 +60,27 @@ typedef struct	s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_player
+{
+	int coins_collected;
+	t_coord pos;
+	bool win;
+	bool lose;
+}	t_player;
+
+typedef struct s_map
+{
+	int valid_path;
+	int valid_collectibles;
+	int valid_start;
+	int valid_exit;
+	int c_visible;
+	t_img	wall;
+	t_img	floor;
+	t_img	hero[4];
+	t_img	collectible;
+}	t_map;
+
 // Struct for game attributes
 typedef struct s_game 
 {
@@ -57,19 +90,9 @@ typedef struct s_game
 	int 	height;
 	char	**map_arr;
 	int		coin;
-	t_img	wall;
-	t_img	floor;
-	int start[2];
-	int exit[2];
+	t_player player;
+	t_map map;
 }	t_game;
-
-typedef struct s_player
-{
-	int coins_collected;
-	int position[2];
-	int win;
-	int lose;
-} t_player;
 
 // Stores possible legal moves
 typedef struct s_moves
@@ -80,7 +103,18 @@ typedef struct s_moves
 	int right;
 }	t_moves;
 
+// Map initialization and parsing functions
+int map_init(char **argv, t_game *game);
+void player_pos(t_game *game);
+void init_map_struct(t_game *game);
+int ber_checker(char *filename);
+
 // Map validation functions
+void map_validation(t_game *game, char *buf);
+void path_checker(t_game *game, char ***tmp_map, int y, int x);
+void map_checker(char **map_arr, t_game *game);
+void wall_checker(t_game *game);
+void rectangle_checker(char **map);
 
 // Game functions
 int game_init(t_game *game);
@@ -91,8 +125,7 @@ int error_handler(int err);
 int exit_handler(void);
 void struct_init(t_game *game);
 
-// Map functions
-int map_init(char **argv, t_game *game);
+// Render functions
 void map_to_window(t_game *game, int y, int x);
 void render_map(t_game *game);
 
@@ -100,5 +133,7 @@ void render_map(t_game *game);
 t_img load_image(void *mlx, char *path);
 void init_assets(t_game *game);
 
-#endif
+// Free functions
+void free_tmp_map(char **s);
 
+#endif
