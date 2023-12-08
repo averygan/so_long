@@ -30,6 +30,7 @@ void init_assets(t_game *game)
 	game->map.hero[1] = load_image(game->mlx, HERO_D_PATH);
 	game->map.hero[2] = load_image(game->mlx, HERO_L_PATH);
 	game->map.hero[3] = load_image(game->mlx, HERO_R_PATH);
-	game->map.collectible = load_image(game->mlx, BOMB_PATH);
+	game->map.collectible = load_image(game->mlx, C_PATH);
+	game->map.exit = load_image(game->mlx, EXIT_PATH);
 	return ;
 }

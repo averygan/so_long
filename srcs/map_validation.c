@@ -30,8 +30,6 @@ void rectangle_checker(char **map)
 			error_handler(2);
 		y++;
 	}
-	if (y == width)
-		error_handler(2);
 }
 
 // Checks if map is surrounded by walls
@@ -86,6 +84,8 @@ void map_checker(char **map_arr, t_game *game)
 	}
 	if (!game->map.valid_start || !game->map.valid_exit || !game->map.valid_collectibles)
 		error_handler(2);
+	if (game->map.valid_exit > 1 || game->map.valid_start > 1)
+		error_handler(2);
 }
 
 // Checks if there is a valid path
@@ -94,13 +94,14 @@ void path_checker(t_game *game, char ***tmp_map, int y, int x)
 	int collectibles;
 
 	collectibles = 0;
-	if (y - 1 < 0 || x - 1 < 0 || y >= game->height || x >= game->width || (*tmp_map)[y][x] == '1')
+	if (y - 1 < 0 || x - 1 < 0 || y >= game->height || 
+		x >= game->width || (*tmp_map)[y][x] == '1')
 		return ;
 	if ((*tmp_map)[y][x] == 'E')
 		game->map.valid_path = 1;
 	if ((*tmp_map)[y][x] == 'C')
 		game->map.c_visible++;
-	if (game->map.valid_path && game->map.c_visible == game->map.valid_collectibles)
+	if (game->map.valid_path && game->map.c_visible >= game->map.valid_collectibles)
 		return ;
 	(*tmp_map)[y][x] = '1';
 	path_checker(game, tmp_map, y - 1, x);
@@ -118,8 +119,13 @@ void map_validation(t_game *game, char *buf)
 	map_checker(game->map_arr, game);
 	player_pos(game);
 	tmp_map = ft_split(buf, '\n');
+	// for (int i = 0; tmp_map[i]; i++)
+	// 	printf("%s\n", tmp_map[i]);
+	// printf("\n");
 	path_checker(game, &tmp_map, game->player.pos.y, game->player.pos.x);
+	// for (int i = 0; tmp_map[i]; i++)
+	// 	printf("%s\n", tmp_map[i]);
 	free_tmp_map(tmp_map);
-	if (!game->map.valid_path || game->map.c_visible != game->map.valid_collectibles)
+	if (!game->map.valid_path || game->map.c_visible < game->map.valid_collectibles)
 		error_handler(4);
 }

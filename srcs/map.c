@@ -13,14 +13,13 @@
 #include "../inc/so_long.h"
 
 // Check map format
-int ber_checker(char *filename)
+void ber_checker(char *filename)
 {
 	int len;
 
 	len = ft_strlen(filename);
 	if (ft_strncmp(&filename[len - 4], ".ber", 4))
 		error_handler(1);
-	return (0);
 }
 
 void init_map_struct(t_game *game)
@@ -55,6 +54,25 @@ void player_pos(t_game *game)
 		coord.y++;
 	}
 }
+
+// Init height and width
+void set_window_size(t_game *game)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (game->map_arr[y])
+	{
+		x = 0;
+		while(game->map_arr[y][x])
+			x++;
+		y++;
+	}
+	game->width = x;
+	game->height = y;
+}
+
 
 // Function to initialize map
 // -> Read .ber file

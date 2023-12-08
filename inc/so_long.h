@@ -20,6 +20,7 @@
 #include <stdbool.h>
 
 # define BUF_SIZE 1000
+# define ENEMY_COUNT 50
 
 #ifdef __linux__
 #	include "../minilibx-linux/mlx.h"
@@ -39,7 +40,8 @@
 # define HERO_R_PATH "./assets/sprite/hero_r.xpm"
 # define HERO_U_PATH "./assets/sprite/hero_u.xpm"
 # define HERO_D_PATH "./assets/sprite/hero_d.xpm"
-# define BOMB_PATH "./assets/sprite/bomb.xpm"
+# define EXIT_PATH "./assets/tiles/exit.xpm"
+# define C_PATH "./assets/sprite/bomb.xpm"
 
 # define SPRITE_SIZE 32
 
@@ -60,25 +62,36 @@ typedef struct	s_img
 	int		endian;
 }	t_img;
 
+// Stores possible legal moves
+typedef struct s_moves
+{
+	int up;
+	int down;
+	int left;
+	int right;
+}	t_moves;
+
 typedef struct s_player
 {
-	int coins_collected;
-	t_coord pos;
-	bool win;
-	bool lose;
+	int		coins;
+	t_coord	pos;
+	bool 	win;
+	int		move_count;
+	t_moves valid_move;
 }	t_player;
 
 typedef struct s_map
 {
-	int valid_path;
-	int valid_collectibles;
-	int valid_start;
-	int valid_exit;
-	int c_visible;
+	int		valid_path;
+	int		valid_collectibles;
+	int		valid_start;
+	int		valid_exit;
+	int		c_visible;
 	t_img	wall;
 	t_img	floor;
 	t_img	hero[4];
 	t_img	collectible;
+	t_img	exit;
 }	t_map;
 
 // Struct for game attributes
@@ -90,24 +103,16 @@ typedef struct s_game
 	int 	height;
 	char	**map_arr;
 	int		coin;
-	t_player player;
-	t_map map;
+	t_player	player;
+	t_map		map;
 }	t_game;
-
-// Stores possible legal moves
-typedef struct s_moves
-{
-	int up;
-	int down;
-	int left;
-	int right;
-}	t_moves;
 
 // Map initialization and parsing functions
 int map_init(char **argv, t_game *game);
+void set_window_size(t_game *game);
 void player_pos(t_game *game);
 void init_map_struct(t_game *game);
-int ber_checker(char *filename);
+void ber_checker(char *filename);
 
 // Map validation functions
 void map_validation(t_game *game, char *buf);
@@ -116,17 +121,25 @@ void map_checker(char **map_arr, t_game *game);
 void wall_checker(t_game *game);
 void rectangle_checker(char **map);
 
-// Game functions
+// Game init functions
 int game_init(t_game *game);
-void set_window_size(t_game *game);
+
+// Movement functions
+void update_legal_moves(t_game *game, t_coord pos, t_moves *valid_move);
+int key_handler(int keysym, t_game *game);
+void update_pos(t_game *game, t_coord *pos, char dir);
 
 // Utils functions
+int x_close(void);
 int error_handler(int err);
-int exit_handler(void);
+void exit_handler(int err);
 void struct_init(t_game *game);
 
 // Render functions
+void img_to_window(t_game *game, t_img *ptr, int y, int x);
 void map_to_window(t_game *game, int y, int x);
+void render_player(t_game *game);
+void render_collectibles(t_game *game);
 void render_map(t_game *game);
 
 // Assets functions

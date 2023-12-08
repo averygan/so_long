@@ -11,7 +11,8 @@
 # **************************************************************************** #
 
 NAME	= so_long
-SRCS	= srcs/so_long.c srcs/utils.c srcs/assets.c srcs/render.c srcs/map.c srcs/map_validation.c srcs/free.c
+SRCS	= srcs/so_long.c srcs/utils.c srcs/assets.c srcs/render.c srcs/map.c \
+			srcs/map_validation.c srcs/free.c srcs/game_init.c srcs/move.c
 OBJS 	= ${SRCS:.c=.o}
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g
