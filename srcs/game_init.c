@@ -19,6 +19,7 @@ void struct_init(t_game *game)
 {
 	game->mlx = NULL;
 	game->window = NULL;
+	game->player.move_count = 0;
 }
 
 // Game init function to initialize mlx and game window
@@ -32,7 +33,7 @@ int game_init(t_game *game)
 	render_player(game);
 	render_collectibles(game);
 	mlx_key_hook(game->window, key_handler, game);
-	mlx_hook(game->window, ON_DESTROY, 0, x_close, game);
+	mlx_hook(game->window, ON_DESTROY, 0, close_game, game);
 	mlx_loop(game->mlx);
 	return (0);
 }

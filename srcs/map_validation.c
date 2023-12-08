@@ -13,7 +13,7 @@
 #include "../inc/so_long.h"
 
 // Checks if map is rectangle
-void rectangle_checker(char **map)
+void rectangle_checker(char **map, t_game *game)
 {
 	int y;
 	int x;
@@ -27,7 +27,7 @@ void rectangle_checker(char **map)
 		while (map[y][x])
 			x++;
 		if (x != width)
-			error_handler(2);
+			error_handler(4, game);
 		y++;
 	}
 }
@@ -43,20 +43,20 @@ void wall_checker(t_game *game)
 	while (game->map_arr[y][x])
 	{
 		if (game->map_arr[y][x] != '1')
-			error_handler(3);
+			error_handler(5, game);
 		x++;
 	}
 	while (y < game->height - 1)
 	{
 		if (game->map_arr[y][0] != '1' || game->map_arr[y][game->width - 1] != '1')
-			error_handler(3);
+			error_handler(5, game);
 		y++;
 	}
 	x = 0;
 	while (game->map_arr[y][x])
 	{
 		if (game->map_arr[y][x] != '1')
-			error_handler(3);
+			error_handler(5, game);
 		x++;
 	}
 }
@@ -83,9 +83,9 @@ void map_checker(char **map_arr, t_game *game)
 		coord.y++;
 	}
 	if (!game->map.valid_start || !game->map.valid_exit || !game->map.valid_collectibles)
-		error_handler(2);
+		error_handler(6, game);
 	if (game->map.valid_exit > 1 || game->map.valid_start > 1)
-		error_handler(2);
+		error_handler(6, game);
 }
 
 // Checks if there is a valid path
@@ -110,22 +110,17 @@ void path_checker(t_game *game, char ***tmp_map, int y, int x)
 	path_checker(game, tmp_map, y, x - 1);
 }
 
-void map_validation(t_game *game, char *buf)
+void map_validation(t_game *game)
 {
 	char **tmp_map;
 
-	rectangle_checker(game->map_arr);
+	rectangle_checker(game->map_arr, game);
 	wall_checker(game);
 	map_checker(game->map_arr, game);
 	player_pos(game);
-	tmp_map = ft_split(buf, '\n');
-	// for (int i = 0; tmp_map[i]; i++)
-	// 	printf("%s\n", tmp_map[i]);
-	// printf("\n");
+	tmp_map = ft_split(game->map_buf, '\n');
 	path_checker(game, &tmp_map, game->player.pos.y, game->player.pos.x);
-	// for (int i = 0; tmp_map[i]; i++)
-	// 	printf("%s\n", tmp_map[i]);
-	free_tmp_map(tmp_map);
+	free_map(tmp_map);
 	if (!game->map.valid_path || game->map.c_visible < game->map.valid_collectibles)
-		error_handler(4);
+		error_handler(7, game);
 }

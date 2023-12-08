@@ -21,7 +21,7 @@ void img_to_window(t_game *game, t_img *ptr, int y, int x)
 // Function to render player and collectibles
 void render_player(t_game *game)
 {
-	img_to_window(game, game->map.hero[3].ptr, game->player.pos.y, game->player.pos.x);
+	img_to_window(game, game->map.hero.ptr, game->player.pos.y, game->player.pos.x);
 }
 
 void render_collectibles(t_game *game)

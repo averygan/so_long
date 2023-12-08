@@ -12,19 +12,8 @@
 
 #include "../inc/so_long.h"
 
-// Check map format
-void ber_checker(char *filename)
-{
-	int len;
-
-	len = ft_strlen(filename);
-	if (ft_strncmp(&filename[len - 4], ".ber", 4))
-		error_handler(1);
-}
-
 void init_map_struct(t_game *game)
 {
-	game->map.valid_path = 0;
 	game->map.valid_path = 0;
 	game->map.valid_collectibles = 0;
 	game->map.valid_start = 0;
@@ -85,7 +74,8 @@ int map_init(char **argv, t_game *game)
 	int fd;
 	int bytes_read;
 
-	ber_checker(argv[1]);
+	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".ber", 4))
+		error_handler(1, game);
 	init_map_struct(game);
 	fd = open(argv[1], O_RDONLY);
 	buf = ft_calloc(BUF_SIZE + 1, sizeof(char));
@@ -98,7 +88,8 @@ int map_init(char **argv, t_game *game)
 	game->map_arr = ft_split(buf, '\n');
 	// Error handling for map
 	set_window_size(game);
-	map_validation(game, buf);
-	free(buf);
+	game->map_buf = buf;
+	map_validation(game);
+	free(game->map_buf);
 	return (0);
 }

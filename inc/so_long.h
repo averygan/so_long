@@ -20,7 +20,6 @@
 #include <stdbool.h>
 
 # define BUF_SIZE 1000
-# define ENEMY_COUNT 50
 
 #ifdef __linux__
 #	include "../minilibx-linux/mlx.h"
@@ -89,7 +88,7 @@ typedef struct s_map
 	int		c_visible;
 	t_img	wall;
 	t_img	floor;
-	t_img	hero[4];
+	t_img	hero;
 	t_img	collectible;
 	t_img	exit;
 }	t_map;
@@ -103,6 +102,7 @@ typedef struct s_game
 	int 	height;
 	char	**map_arr;
 	int		coin;
+	char	*map_buf;
 	t_player	player;
 	t_map		map;
 }	t_game;
@@ -112,14 +112,13 @@ int map_init(char **argv, t_game *game);
 void set_window_size(t_game *game);
 void player_pos(t_game *game);
 void init_map_struct(t_game *game);
-void ber_checker(char *filename);
 
 // Map validation functions
-void map_validation(t_game *game, char *buf);
+void map_validation(t_game *game);
 void path_checker(t_game *game, char ***tmp_map, int y, int x);
 void map_checker(char **map_arr, t_game *game);
 void wall_checker(t_game *game);
-void rectangle_checker(char **map);
+void rectangle_checker(char **map, t_game *game);
 
 // Game init functions
 int game_init(t_game *game);
@@ -130,9 +129,9 @@ int key_handler(int keysym, t_game *game);
 void update_pos(t_game *game, t_coord *pos, char dir);
 
 // Utils functions
-int x_close(void);
-int error_handler(int err);
-void exit_handler(int err);
+int close_game(t_game *game);
+int error_handler(int err, t_game *game);
+void exit_handler(int close, t_game *game);
 void struct_init(t_game *game);
 
 // Render functions
@@ -147,6 +146,6 @@ t_img load_image(void *mlx, char *path);
 void init_assets(t_game *game);
 
 // Free functions
-void free_tmp_map(char **s);
+void free_map(char **s);
 
 #endif

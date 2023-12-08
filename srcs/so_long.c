@@ -19,8 +19,8 @@ int	main(int argc, char **argv)
 	t_game game;
 
 	if (argc != 2)
-		exit_handler(1);
+		error_handler(2, &game);
 	if (map_init(argv, &game) == -1)
-		error_handler(0);
+		error_handler(3, &game);
 	game_init(&game);
 }
