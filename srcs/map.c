@@ -81,7 +81,7 @@ int	map_init(char **argv, t_game *game)
 	if (!buf)
 		return (-1);
 	bytes_read = read(fd, buf, BUF_SIZE);
-	if (bytes_read == -1)
+	if (bytes_read == -1 || bytes_read == 0)
 		return (free(buf), -1);
 	game->map_arr = ft_split(buf, '\n');
 	set_window_size(game);
