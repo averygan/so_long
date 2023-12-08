@@ -12,7 +12,7 @@
 
 #include "../inc/so_long.h"
 
-void free_map(char **s)
+void	free_map(char **s)
 {
 	int	i;
 

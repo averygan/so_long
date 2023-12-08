@@ -12,7 +12,7 @@
 
 #include "../inc/so_long.h"
 
-void init_map_struct(t_game *game)
+void	init_map_struct(t_game *game)
 {
 	game->map.valid_path = 0;
 	game->map.valid_collectibles = 0;
@@ -22,9 +22,9 @@ void init_map_struct(t_game *game)
 }
 
 // Determine player starting position
-void player_pos(t_game *game)
+void	player_pos(t_game *game)
 {
-	t_coord coord;
+	t_coord	coord;
 
 	coord.y = 0;
 	while (game->map_arr[coord.y])
@@ -45,16 +45,16 @@ void player_pos(t_game *game)
 }
 
 // Init height and width
-void set_window_size(t_game *game)
+void	set_window_size(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (game->map_arr[y])
 	{
 		x = 0;
-		while(game->map_arr[y][x])
+		while (game->map_arr[y][x])
 			x++;
 		y++;
 	}
@@ -62,17 +62,16 @@ void set_window_size(t_game *game)
 	game->height = y;
 }
 
-
 // Function to initialize map
 // -> Read .ber file
 // -> malloc map_arr
 // -> assign map_arr
 // -> checks if map is valid
-int map_init(char **argv, t_game *game)
+int	map_init(char **argv, t_game *game)
 {
 	char	*buf;
-	int fd;
-	int bytes_read;
+	int		fd;
+	int		bytes_read;
 
 	if (ft_strncmp(&argv[1][ft_strlen(argv[1]) - 4], ".ber", 4))
 		error_handler(1, game);
@@ -83,10 +82,8 @@ int map_init(char **argv, t_game *game)
 		return (-1);
 	bytes_read = read(fd, buf, BUF_SIZE);
 	if (bytes_read == -1)
-		return(free(buf), -1);
-	// Alloc map
+		return (free(buf), -1);
 	game->map_arr = ft_split(buf, '\n');
-	// Error handling for map
 	set_window_size(game);
 	game->map_buf = buf;
 	map_validation(game);

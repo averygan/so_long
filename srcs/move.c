@@ -13,7 +13,7 @@
 #include "../inc/so_long.h"
 
 // Update position of player
-void update_pos(t_game *game, t_coord *pos, char dir)
+void	update_pos(t_game *game, t_coord *pos, char dir)
 {
 	if (dir == 'w')
 		pos->y--;
@@ -28,9 +28,9 @@ void update_pos(t_game *game, t_coord *pos, char dir)
 }
 
 // Function to update map based on player's movement
-void update_map(t_game *game)
+void	update_map(t_game *game)
 {
-	t_coord coord;
+	t_coord	coord;
 
 	coord.y = game->player.pos.y;
 	coord.x = game->player.pos.x;
@@ -40,9 +40,9 @@ void update_map(t_game *game)
 	{
 		game->player.coins++;
 		game->map_arr[coord.y][coord.x] = '0';
-		//ft_printf("collected %d/%d\n", game->player.coins, game->map.valid_collectibles);
 	}
-	if (game->map_arr[coord.y][coord.x] == 'E' && game->player.coins == game->map.valid_collectibles)
+	if (game->map_arr[coord.y][coord.x] == 'E' && game->player.coins == 
+		game->map.valid_collectibles)
 	{
 		game->player.win = 1;
 		exit_handler(2, game);
@@ -51,7 +51,7 @@ void update_map(t_game *game)
 }
 
 // Function for game logic based on key pressed
-int key_handler(int keysym, t_game *game)
+int	key_handler(int keysym, t_game *game)
 {
 	update_legal_moves(game, game->player.pos, &game->player.valid_move);
 	if (keysym == ESC)
@@ -64,19 +64,17 @@ int key_handler(int keysym, t_game *game)
 		update_pos(game, &(game->player.pos), 'a');
 	else if (keysym == D_KEY && game->player.valid_move.right)
 		update_pos(game, &(game->player.pos), 'd');
-	// printf("curr pos is %d %d\n", game->player.pos.y, game->player.pos.x);
 	update_map(game);
 	return (0);
 }
 
 // Function to update player's legal moves when keyhook pressed
-void update_legal_moves(t_game *game, t_coord pos, t_moves *valid_move)
+void	update_legal_moves(t_game *game, t_coord pos, t_moves *valid_move)
 {
 	valid_move->up = 0;
 	valid_move->down = 0;
 	valid_move->left = 0;
 	valid_move->right = 0;
-
 	if (game->map_arr[pos.y - 1][pos.x] != '1')
 		valid_move->up = 1;
 	if (game->map_arr[pos.y + 1][pos.x] != '1')

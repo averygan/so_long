@@ -12,21 +12,22 @@
 
 #include "../inc/so_long.h"
 
-void img_to_window(t_game *game, t_img *ptr, int y, int x)
+void	img_to_window(t_game *game, t_img *ptr, int y, int x)
 {
 	mlx_put_image_to_window(game->mlx, game->window, ptr, 
 		(x * SPRITE_SIZE), (y * SPRITE_SIZE));
 }
 
 // Function to render player and collectibles
-void render_player(t_game *game)
+void	render_player(t_game *game)
 {
-	img_to_window(game, game->map.hero.ptr, game->player.pos.y, game->player.pos.x);
+	img_to_window(game, game->map.hero.ptr, game->player.pos.y,
+		game->player.pos.x);
 }
 
-void render_collectibles(t_game *game)
+void	render_collectibles(t_game *game)
 {
-	t_coord coord;
+	t_coord	coord;
 
 	coord.y = 0;
 	while (game->map_arr[coord.y])
@@ -35,7 +36,8 @@ void render_collectibles(t_game *game)
 		while (game->map_arr[coord.y][coord.x])
 		{
 			if (game->map_arr[coord.y][coord.x] == 'C')
-				img_to_window(game, game->map.collectible.ptr, coord.y, coord.x);		
+				img_to_window(game, game->map.collectible.ptr, 
+					coord.y, coord.x);
 			coord.x++;
 		}
 		coord.y++;
@@ -43,10 +45,10 @@ void render_collectibles(t_game *game)
 }
 
 // If map is valid, render map
-void render_map(t_game *game)
+void	render_map(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (game->map_arr[y])
@@ -59,7 +61,7 @@ void render_map(t_game *game)
 			else if (game->map_arr[y][x] == 'E')
 				img_to_window(game, game->map.exit.ptr, y, x);
 			else
-				img_to_window(game, game->map.floor.ptr, y, x);				
+				img_to_window(game, game->map.floor.ptr, y, x);
 			x++;
 		}
 		y++;

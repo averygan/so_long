@@ -13,11 +13,11 @@
 #include "../inc/so_long.h"
 
 // Checks if map is rectangle
-void rectangle_checker(char **map, t_game *game)
+void	rectangle_checker(char **map, t_game *game)
 {
-	int y;
-	int x;
-	int width;
+	int	y;
+	int	x;
+	int	width;
 
 	y = 0;
 	width = ft_strlen(map[y]);
@@ -33,10 +33,10 @@ void rectangle_checker(char **map, t_game *game)
 }
 
 // Checks if map is surrounded by walls
-void wall_checker(t_game *game)
+void	wall_checker(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	x = 0;
@@ -48,7 +48,8 @@ void wall_checker(t_game *game)
 	}
 	while (y < game->height - 1)
 	{
-		if (game->map_arr[y][0] != '1' || game->map_arr[y][game->width - 1] != '1')
+		if (game->map_arr[y][0] != '1' || 
+			game->map_arr[y][game->width - 1] != '1')
 			error_handler(5, game);
 		y++;
 	}
@@ -62,15 +63,15 @@ void wall_checker(t_game *game)
 }
 
 // Checks if map has at least 1 exit, 1 collectible and 1 starting position
-void map_checker(char **map_arr, t_game *game)
+void	map_checker(char **map_arr, t_game *game)
 {
-	t_coord coord;
+	t_coord	coord;
 
 	coord.y = 0;
 	while (map_arr[coord.y])
 	{
 		coord.x = 0;
-		while(map_arr[coord.y][coord.x])
+		while (map_arr[coord.y][coord.x])
 		{
 			if (map_arr[coord.y][coord.x] == 'E')
 				game->map.valid_exit++;
@@ -82,16 +83,17 @@ void map_checker(char **map_arr, t_game *game)
 		}
 		coord.y++;
 	}
-	if (!game->map.valid_start || !game->map.valid_exit || !game->map.valid_collectibles)
+	if (!game->map.valid_start || !game->map.valid_exit || 
+		!game->map.valid_collectibles)
 		error_handler(6, game);
 	if (game->map.valid_exit > 1 || game->map.valid_start > 1)
 		error_handler(6, game);
 }
 
 // Checks if there is a valid path
-void path_checker(t_game *game, char ***tmp_map, int y, int x)
+void	path_checker(t_game *game, char ***tmp_map, int y, int x)
 {
-	int collectibles;
+	int	collectibles;
 
 	collectibles = 0;
 	if (y - 1 < 0 || x - 1 < 0 || y >= game->height || 
@@ -101,7 +103,8 @@ void path_checker(t_game *game, char ***tmp_map, int y, int x)
 		game->map.valid_path = 1;
 	if ((*tmp_map)[y][x] == 'C')
 		game->map.c_visible++;
-	if (game->map.valid_path && game->map.c_visible >= game->map.valid_collectibles)
+	if (game->map.valid_path && game->map.c_visible >= 
+		game->map.valid_collectibles)
 		return ;
 	(*tmp_map)[y][x] = '1';
 	path_checker(game, tmp_map, y - 1, x);
@@ -110,9 +113,9 @@ void path_checker(t_game *game, char ***tmp_map, int y, int x)
 	path_checker(game, tmp_map, y, x - 1);
 }
 
-void map_validation(t_game *game)
+void	map_validation(t_game *game)
 {
-	char **tmp_map;
+	char	**tmp_map;
 
 	rectangle_checker(game->map_arr, game);
 	wall_checker(game);
@@ -121,6 +124,7 @@ void map_validation(t_game *game)
 	tmp_map = ft_split(game->map_buf, '\n');
 	path_checker(game, &tmp_map, game->player.pos.y, game->player.pos.x);
 	free_map(tmp_map);
-	if (!game->map.valid_path || game->map.c_visible < game->map.valid_collectibles)
+	if (!game->map.valid_path || game->map.c_visible < 
+		game->map.valid_collectibles)
 		error_handler(7, game);
 }

@@ -13,16 +13,16 @@
 #include "../inc/so_long.h"
 
 // Function to convert xpm to image
-t_img load_image(void *mlx, char *path)
+t_img	load_image(void *mlx, char *path)
 {
-	t_img img;
+	t_img	img;
 
 	img.ptr = mlx_xpm_file_to_image(mlx, path, &img.x, &img.y);
 	return (img);
 }
 
 // Function to initialize all game assets
-void init_assets(t_game *game)
+void	init_assets(t_game *game)
 {
 	game->map.wall = load_image(game->mlx, WALL_PATH);
 	game->map.floor = load_image(game->mlx, FLOOR_PATH);

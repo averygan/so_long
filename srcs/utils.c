@@ -13,7 +13,7 @@
 #include "../inc/so_long.h"
 
 // Function to handle errors and redirect to exit
-int error_handler(int err, t_game *game)
+int	error_handler(int err, t_game *game)
 {
 	ft_putstr_fd("Error\n", 2);
 	if (err == 1)
@@ -37,14 +37,14 @@ int error_handler(int err, t_game *game)
 }
 
 // Function to close game if esc or x window pressed
-int close_game(t_game *game)
+int	close_game(t_game *game)
 {
 	exit_handler(1, game);
 	return (0);
 }
 
 // Free all images
-void free_sprites(t_game *game)
+void	free_sprites(t_game *game)
 {
 	mlx_destroy_image(game->mlx, game->map.hero.ptr);
 	mlx_destroy_image(game->mlx, game->map.wall.ptr);
@@ -54,7 +54,7 @@ void free_sprites(t_game *game)
 }
 
 // Exit: Teardown images and window
-void exit_handler(int close, t_game *game)
+void	exit_handler(int close, t_game *game)
 {
 	if (game->map_arr)
 		free_map(game->map_arr);
