@@ -20,6 +20,7 @@ void	struct_init(t_game *game)
 	game->mlx = NULL;
 	game->window = NULL;
 	game->player.move_count = 0;
+	game->player.coins = 0;
 }
 
 // Game init function to initialize mlx and game window
