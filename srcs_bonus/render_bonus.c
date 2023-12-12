@@ -86,6 +86,18 @@ void	render_player(t_game *game)
 	}
 }
 
+void	render_enemy(t_game *game)
+{
+	int i;
+
+	i = 0;
+	while (i < game->enemy_count)
+	{
+		img_to_window(game, game->map.enemy[0].ptr, game->enemy[i].pos.y, game->enemy[i].pos.x);
+		i++;
+	}
+}
+
 void	render_collectibles(t_game *game)
 {
 	t_coord	coord;

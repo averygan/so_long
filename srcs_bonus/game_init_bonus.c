@@ -12,7 +12,30 @@
 
 #include "../inc/so_long_bonus.h"
 
-// Function to initialize player
+// Init enemy
+void enemy_init(t_game *game)
+{
+	int		i;
+	t_coord	coord;
+
+	i = 0;
+	coord.y = 0;
+	while (game->map_arr[coord.y])
+	{
+		coord.x = 0;
+		while (game->map_arr[coord.y][coord.x])
+		{
+			if (game->map_arr[coord.y][coord.x] == 'X')
+			{
+				game->enemy[i].pos.y = coord.y;
+				game->enemy[i].pos.x = coord.x;
+				i++;
+			}
+			coord.x++;
+		}
+		coord.y++;
+	}
+}
 
 // Fuction to init struct variables
 void	struct_init(t_game *game)
@@ -34,6 +57,12 @@ int	game_init(t_game *game)
 			SPRITE_SIZE, game->height * SPRITE_SIZE, "so_long");
 	init_assets(game);
 	render_map(game);
+	if (game->enemy_count > 0)
+	{
+		enemy_init(game);
+		printf("enemy is at %d, %d\n", game->enemy[0].pos.y, game->enemy[0].pos.x);
+		render_enemy(game);
+	}
 	render_player(game);
 	render_collectibles(game);
 	mlx_key_hook(game->window, key_handler, game);

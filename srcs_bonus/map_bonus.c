@@ -19,6 +19,7 @@ void	init_map_struct(t_game *game)
 	game->map.valid_start = 0;
 	game->map.valid_exit = 0;
 	game->map.c_visible = 0;
+	game->enemy_count = 0;
 }
 
 // Determine player starting position

@@ -62,6 +62,7 @@ void	update_map(t_game *game)
 		game->player.win = 1;
 		exit_handler(2, game);
 	}
+	render_enemy(game);
 	render_collectibles(game);
 }
 

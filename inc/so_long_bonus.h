@@ -45,8 +45,15 @@
 # define HERO_2_D_PATH "./assets/sprite/hero_2_d.xpm"
 # define EXIT_PATH "./assets/tiles/exit.xpm"
 # define C_PATH "./assets/sprite/bomb.xpm"
+# define ENEMY_L_PATH "./assets/sprite/enemy_l.xpm"
+# define ENEMY_R_PATH "./assets/sprite/enemy_r.xpm"
 
 # define SPRITE_SIZE 32
+# define UP_N 0
+# define DOWN_N 1
+# define LEFT_N 2
+# define RIGHT_N 3
+# define ENEMY_LIMIT 30
 
 typedef struct s_coord
 {
@@ -96,9 +103,16 @@ typedef struct s_map
 	t_img	floor;
 	t_img	hero[4];
 	t_img	hero_2[4];
+	t_img	enemy[2];
 	t_img	collectible;
 	t_img	exit;
 }	t_map;
+
+typedef struct s_enemy
+{
+	t_coord	pos;
+	int		curr_dir;
+}	t_enemy;
 
 // Struct for game attributes
 typedef struct s_game 
@@ -108,8 +122,9 @@ typedef struct s_game
 	int			width;
 	int			height;
 	char		**map_arr;
-	int			coin;
 	char		*map_buf;
+	int 		enemy_count;
+	t_enemy		enemy[ENEMY_LIMIT];
 	t_player	player;
 	t_map		map;
 }	t_game;
@@ -147,6 +162,7 @@ void	map_to_window(t_game *game, int y, int x);
 void	render_player(t_game *game);
 void	render_collectibles(t_game *game);
 void	render_map(t_game *game);
+void	render_enemy(t_game *game);
 
 // Assets functions
 t_img	load_image(void *mlx, char *path);

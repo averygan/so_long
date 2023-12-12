@@ -79,6 +79,8 @@ void	map_checker(char **map_arr, t_game *game)
 				game->map.valid_collectibles++;
 			if (map_arr[coord.y][coord.x] == 'P')
 				game->map.valid_start++;
+			if (map_arr[coord.y][coord.x] == 'X')
+				game->enemy_count++;
 			coord.x++;
 		}
 		coord.y++;
