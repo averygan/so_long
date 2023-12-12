@@ -60,7 +60,6 @@ int	game_init(t_game *game)
 	if (game->enemy_count > 0)
 	{
 		enemy_init(game);
-		printf("enemy is at %d, %d\n", game->enemy[0].pos.y, game->enemy[0].pos.x);
 		render_enemy(game);
 	}
 	render_player(game);

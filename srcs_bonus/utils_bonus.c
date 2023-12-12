@@ -54,6 +54,8 @@ void	free_sprites(t_game *game)
 	mlx_destroy_image(game->mlx, game->map.hero_2[1].ptr);
 	mlx_destroy_image(game->mlx, game->map.hero_2[2].ptr);
 	mlx_destroy_image(game->mlx, game->map.hero_2[3].ptr);
+	mlx_destroy_image(game->mlx, game->map.enemy[0].ptr);
+	mlx_destroy_image(game->mlx, game->map.enemy[1].ptr);
 	mlx_destroy_image(game->mlx, game->map.wall.ptr);
 	mlx_destroy_image(game->mlx, game->map.floor.ptr);
 	mlx_destroy_image(game->mlx, game->map.collectible.ptr);
