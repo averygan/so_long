@@ -58,12 +58,9 @@ void	update_map(t_game *game)
 	}
 	if (game->map_arr[coord.y][coord.x] == 'E' && game->player.coins == 
 		game->map.valid_collectibles)
-	{
-		game->player.win = 1;
-		exit_handler(2, game);
-	}
+			exit_handler(2, game);
 	render_enemy(game);
-	render_collectibles(game);
+	//render_collectibles(game);
 }
 
 // Function for game logic based on key pressed

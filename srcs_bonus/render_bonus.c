@@ -18,37 +18,6 @@ void	img_to_window(t_game *game, t_img *ptr, int y, int x)
 		(x * SPRITE_SIZE), (y * SPRITE_SIZE));
 }
 
-// void	ft_delay(int delay)
-// {
-// 	int i;
-// 	int j;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (i++ <= delay)
-// 	{
-// 		while (j++ <= delay)
-// 			asm("nop");
-// 	}
-// }
-
-// // Render first frame -> delay -> render second frame
-// void	render_animation(t_game *game)
-// {
-// 	if (game->player.curr_dir == 0)
-// 		img_to_window(game, game->map.hero_2[0].ptr, game->player.pos.y,
-// 			game->player.pos.x);
-// 	if (game->player.curr_dir == 1)
-// 		img_to_window(game, game->map.hero_2[1].ptr, game->player.pos.y,
-// 			game->player.pos.x);
-// 	if (game->player.curr_dir == 2)
-// 		img_to_window(game, game->map.hero_2[2].ptr, game->player.pos.y,
-// 			game->player.pos.x);
-// 	if (game->player.curr_dir == 3)
-// 		img_to_window(game, game->map.hero_2[3].ptr, game->player.pos.y,
-// 			game->player.pos.x);
-// }
-
 // Function to render player and collectibles
 void	render_player(t_game *game)
 {
@@ -86,22 +55,15 @@ void	render_player(t_game *game)
 	}
 }
 
-void	render_enemy(t_game *game)
-{
-	int i;
-
-	i = 0;
-	while (i < game->enemy_count)
-	{
-		img_to_window(game, game->map.enemy[0].ptr, game->enemy[i].pos.y, game->enemy[i].pos.x);
-		i++;
-	}
-}
-
-void	render_collectibles(t_game *game)
+void	render_collectibles(t_game *game, bool start)
 {
 	t_coord	coord;
+	static int counter;
+	static int i;
 
+	counter++;
+	if (counter < 30000 && start == false)
+		return ;
 	coord.y = 0;
 	while (game->map_arr[coord.y])
 	{
@@ -109,12 +71,22 @@ void	render_collectibles(t_game *game)
 		while (game->map_arr[coord.y][coord.x])
 		{
 			if (game->map_arr[coord.y][coord.x] == 'C')
-				img_to_window(game, game->map.collectible.ptr, 
-					coord.y, coord.x);
+			{
+				if (i == 0)
+					img_to_window(game, game->map.collectible[0].ptr, coord.y, coord.x);
+				if (i == 1)
+					img_to_window(game, game->map.collectible[1].ptr, coord.y, coord.x);
+				if (i == 2)
+					img_to_window(game, game->map.collectible[2].ptr, coord.y, coord.x);
+			}
 			coord.x++;
 		}
 		coord.y++;
 	}
+	i++;
+	if (i == 3)
+		i = 0;
+	counter = 0;
 }
 
 // If map is valid, render map
@@ -133,7 +105,7 @@ void	render_map(t_game *game)
 				img_to_window(game, game->map.wall.ptr, y, x);
 			else if (game->map_arr[y][x] == 'E')
 				img_to_window(game, game->map.exit.ptr, y, x);
-			else
+			else if (game->map_arr[y][x] != 'C')
 				img_to_window(game, game->map.floor.ptr, y, x);
 			x++;
 		}

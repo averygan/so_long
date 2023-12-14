@@ -17,7 +17,7 @@ SRCS	= srcs/so_long.c srcs/utils.c srcs/assets.c srcs/render.c srcs/map.c \
 SRCS_BONUS = srcs_bonus/so_long_bonus.c srcs_bonus/utils_bonus.c srcs_bonus/assets_bonus.c \
 				srcs_bonus/render_bonus.c srcs_bonus/map_bonus.c \
 				srcs_bonus/map_validation_bonus.c srcs_bonus/free_bonus.c \
-				srcs_bonus/game_init_bonus.c srcs_bonus/move_bonus.c
+				srcs_bonus/game_init_bonus.c srcs_bonus/move_bonus.c srcs_bonus/enemy_bonus.c
 OBJS 	= ${SRCS:.c=.o}
 OBJS_BONUS = ${SRCS_BONUS:.c=.o}
 CC		= cc

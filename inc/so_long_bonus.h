@@ -45,8 +45,9 @@
 # define HERO_2_D_PATH "./assets/sprite/hero_2_d.xpm"
 # define EXIT_PATH "./assets/tiles/exit.xpm"
 # define C_PATH "./assets/sprite/bomb.xpm"
-# define ENEMY_L_PATH "./assets/sprite/enemy_l.xpm"
-# define ENEMY_R_PATH "./assets/sprite/enemy_r.xpm"
+# define C_2_PATH "./assets/sprite/bomb_2.xpm"
+# define C_3_PATH "./assets/sprite/bomb_3.xpm"
+# define ENEMY_PATH "./assets/sprite/enemy.xpm"
 
 # define SPRITE_SIZE 32
 # define UP_N 0
@@ -54,6 +55,8 @@
 # define LEFT_N 2
 # define RIGHT_N 3
 # define ENEMY_LIMIT 30
+# define WHITE 0xFFFFFF
+# define ENEMY_SPEED 10000
 
 typedef struct s_coord
 {
@@ -103,8 +106,8 @@ typedef struct s_map
 	t_img	floor;
 	t_img	hero[4];
 	t_img	hero_2[4];
-	t_img	enemy[2];
-	t_img	collectible;
+	t_img	enemy[3];
+	t_img	collectible[3];
 	t_img	exit;
 }	t_map;
 
@@ -144,10 +147,13 @@ void	rectangle_checker(char **map, t_game *game);
 
 // Game init functions
 int		game_init(t_game *game);
+void	struct_init(t_game *game);
+void	enemy_init(t_game *game);
 
 // Movement functions
 void	update_legal_moves(t_game *game, t_coord pos, t_moves *valid_move);
 int		key_handler(int keysym, t_game *game);
+void	update_map(t_game *game);
 void	update_pos(t_game *game, t_coord *pos, int dir);
 
 // Utils functions
@@ -160,9 +166,16 @@ void	struct_init(t_game *game);
 void	img_to_window(t_game *game, t_img *ptr, int y, int x);
 void	map_to_window(t_game *game, int y, int x);
 void	render_player(t_game *game);
-void	render_collectibles(t_game *game);
+void	render_collectibles(t_game *game, bool start);
 void	render_map(t_game *game);
+
+// Enemy functions
 void	render_enemy(t_game *game);
+void	check_enemy_collision(t_game *game);
+void	update_enemy_pos(t_enemy *enemy);
+void	change_enemy_dir(t_game *game, t_enemy *enemy);
+int		enemy_valid_move(t_game *game, t_enemy enemy);
+void	move_enemy(t_game *game);
 
 // Assets functions
 t_img	load_image(void *mlx, char *path);
