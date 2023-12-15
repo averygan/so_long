@@ -82,15 +82,15 @@ void	char_checker(t_game *game, char *buf)
 		}
 		i++;
 	}
-	i = 0;
-	while (buf[i])
-	{
+	i = -1;
+	while (buf[++i])
 		if (buf[i] != '\n')
 			flag = 0;
-		i++;
-	}
 	if (flag)
+	{
+		free(buf);
 		error_handler(3, game);
+	}
 }
 
 // Function to initialize map
