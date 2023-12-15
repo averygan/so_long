@@ -12,6 +12,7 @@
 
 #include "../inc/so_long_bonus.h"
 
+// Pushes image to window adjusted for sprite size
 void	img_to_window(t_game *game, t_img *ptr, int y, int x)
 {
 	mlx_put_image_to_window(game->mlx, game->window, ptr, 
@@ -35,6 +36,7 @@ void	render_player(t_game *game)
 	}
 }
 
+// Function to render collectibles on window
 void	render_collectibles(t_game *game, bool start)
 {
 	t_coord		coord;

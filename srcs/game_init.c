@@ -12,8 +12,6 @@
 
 #include "../inc/so_long.h"
 
-// Function to initialize player
-
 // Fuction to init struct variables
 void	struct_init(t_game *game)
 {

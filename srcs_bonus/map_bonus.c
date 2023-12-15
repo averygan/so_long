@@ -64,6 +64,7 @@ void	set_window_size(t_game *game)
 	game->height = y;
 }
 
+// Checks if characters in the map are valid
 void	char_checker(t_game *game, char *buf)
 {
 	int	i;
