@@ -64,6 +64,34 @@ void	set_window_size(t_game *game)
 	game->height = y;
 }
 
+void	char_checker(t_game *game, char *buf)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 1;
+	while (buf[i])
+	{
+		if (buf[i] != '0' && buf[i] != '1' && buf[i] != 'C' && 
+			buf[i] != 'E' && buf[i] != 'P' && buf[i] != 'X' && buf[i] != '\n')
+		{
+			free(buf);
+			error_handler(8, game);
+		}
+		i++;
+	}
+	i = 0;
+	while (buf[i])
+	{
+		if (buf[i] != '\n')
+			flag = 0;
+		i++;
+	}
+	if (flag)
+		error_handler(3, game);
+}
+
 // Function to initialize map
 // -> Read .ber file
 // -> malloc map_arr
@@ -85,6 +113,7 @@ int	map_init(char **argv, t_game *game)
 	bytes_read = read(fd, buf, BUF_SIZE);
 	if (bytes_read == -1 || bytes_read == 0)
 		return (free(buf), -1);
+	char_checker(game, buf);
 	game->map_arr = ft_split(buf, '\n');
 	set_window_size(game);
 	game->map_buf = buf;

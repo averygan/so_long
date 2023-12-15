@@ -19,22 +19,18 @@
 # include <errno.h>
 # include <stdbool.h>
 
-# define BUF_SIZE 1000
-
-# ifdef __linux__
-#  include "../minilibx-linux/mlx.h"
-#  define OS_LINUX 1
-#  define W_KEY 119
-#  define S_KEY 115
-#  define A_KEY 97
-#  define D_KEY 100
-#  define UP_KEY 65362
-#  define DOWN_KEY 65364
-#  define LEFT_KEY 65361
-#  define RIGHT_KEY 65363
-#  define ESC 65307
-#  define ON_DESTROY 17
-# endif
+// Keys definition
+# include "../minilibx-linux/mlx.h"
+# define W_KEY 119
+# define S_KEY 115
+# define A_KEY 97
+# define D_KEY 100
+# define UP_KEY 65362
+# define DOWN_KEY 65364
+# define LEFT_KEY 65361
+# define RIGHT_KEY 65363
+# define ESC 65307
+# define ON_DESTROY 17
 
 // Define path for assets
 # define WALL_PATH	"./assets/tiles/wall.xpm"
@@ -53,6 +49,8 @@
 # define C_3_PATH "./assets/sprite/bomb_3.xpm"
 # define ENEMY_PATH "./assets/sprite/enemy.xpm"
 
+// Variables definition
+# define BUF_SIZE 1000
 # define SPRITE_SIZE 32
 # define UP_N 0
 # define DOWN_N 1
@@ -95,8 +93,8 @@ typedef struct s_player
 	bool	win;
 	int		move_count;
 	t_moves	valid_move;
-	int 	curr_dir;
-	int 	animation;
+	int		curr_dir;
+	int		animation;
 }	t_player;
 
 typedef struct s_map
@@ -130,7 +128,7 @@ typedef struct s_game
 	int			height;
 	char		**map_arr;
 	char		*map_buf;
-	int 		enemy_count;
+	int			enemy_count;
 	t_enemy		enemy[ENEMY_LIMIT];
 	t_player	player;
 	t_map		map;
@@ -140,6 +138,7 @@ typedef struct s_game
 int		map_init(char **argv, t_game *game);
 void	set_window_size(t_game *game);
 void	player_pos(t_game *game);
+void	char_checker(t_game *game, char *buf);
 void	init_map_struct(t_game *game);
 
 // Map validation functions
@@ -157,6 +156,7 @@ void	enemy_init(t_game *game);
 // Movement functions
 void	update_legal_moves(t_game *game, t_coord pos, t_moves *valid_move);
 int		key_handler(int keysym, t_game *game);
+void	movement_handler(t_game *game, int dir);
 void	update_map(t_game *game);
 void	update_pos(t_game *game, t_coord *pos, int dir);
 
@@ -168,13 +168,12 @@ void	struct_init(t_game *game);
 
 // Render functions
 void	img_to_window(t_game *game, t_img *ptr, int y, int x);
-void	map_to_window(t_game *game, int y, int x);
 void	render_player(t_game *game);
 void	render_collectibles(t_game *game, bool start);
 void	render_map(t_game *game);
+void	render_enemy(t_game *game);
 
 // Enemy functions
-void	render_enemy(t_game *game);
 void	check_enemy_collision(t_game *game);
 void	update_enemy_pos(t_enemy *enemy);
 void	change_enemy_dir(t_game *game, t_enemy *enemy);

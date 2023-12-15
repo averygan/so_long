@@ -15,14 +15,14 @@
 // Check if enemy has collided with player
 void	check_enemy_collision(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < game->enemy_count)
 	{
-		if (game->enemy[i].pos.y == game->player.pos.y && 
+		if (game->enemy[i].pos.y == game->player.pos.y && \
 			game->enemy[i].pos.x == game->player.pos.x)
-				exit_handler(3, game);
+			exit_handler(3, game);
 		i++;
 	}
 }
@@ -56,8 +56,8 @@ void	change_enemy_dir(t_game *game, t_enemy *enemy)
 // Render enemy's new pos on map
 void	move_enemy(t_game *game)
 {
-	static int 	counter;
-	int 		i;
+	static int	counter;
+	int			i;
 
 	counter++;
 	if (counter < ENEMY_SPEED)
@@ -67,12 +67,14 @@ void	move_enemy(t_game *game)
 	{
 		if (enemy_valid_move(game, game->enemy[i]))
 		{
-			img_to_window(game, game->map.floor.ptr, game->enemy[i].pos.y, game->enemy[i].pos.x);
+			img_to_window(game, game->map.floor.ptr, game->enemy[i].pos.y, 
+				game->enemy[i].pos.x);
 			update_enemy_pos(&game->enemy[i]);
 		}
 		else
 		{
-			img_to_window(game, game->map.floor.ptr, game->enemy[i].pos.y, game->enemy[i].pos.x);
+			img_to_window(game, game->map.floor.ptr, game->enemy[i].pos.y, 
+				game->enemy[i].pos.x);
 			change_enemy_dir(game, &game->enemy[i]);
 		}
 		render_enemy(game);
@@ -82,16 +84,19 @@ void	move_enemy(t_game *game)
 }
 
 // Checks if enemy's next move is valid
-int		enemy_valid_move(t_game *game, t_enemy enemy)
+int	enemy_valid_move(t_game *game, t_enemy enemy)
 {
-	if (enemy.curr_dir == UP_N && !ft_strrchr("1CE", game->map_arr[enemy.pos.y - 1][enemy.pos.x]))
+	if (enemy.curr_dir == UP_N && !ft_strrchr("1CE", 
+			game->map_arr[enemy.pos.y - 1][enemy.pos.x]))
 		return (1);
-	if (enemy.curr_dir == DOWN_N && !ft_strrchr("1CE", game->map_arr[enemy.pos.y + 1][enemy.pos.x]))
+	if (enemy.curr_dir == DOWN_N && !ft_strrchr("1CE", 
+			game->map_arr[enemy.pos.y + 1][enemy.pos.x]))
 		return (1);
-	if (enemy.curr_dir == LEFT_N && !ft_strrchr("1CE", game->map_arr[enemy.pos.y][enemy.pos.x - 1]))
+	if (enemy.curr_dir == LEFT_N && !ft_strrchr("1CE", 
+			game->map_arr[enemy.pos.y][enemy.pos.x - 1]))
 		return (1);
-	if (enemy.curr_dir == RIGHT_N && !ft_strrchr("1CE", game->map_arr[enemy.pos.y][enemy.pos.x + 1]))
+	if (enemy.curr_dir == RIGHT_N && !ft_strrchr("1CE", 
+			game->map_arr[enemy.pos.y][enemy.pos.x + 1]))
 		return (1);
 	return (0);
 }
-

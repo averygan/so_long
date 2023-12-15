@@ -23,43 +23,23 @@ void	render_player(t_game *game)
 {
 	if (game->player.animation == 1)
 	{
-		if (game->player.curr_dir == 0)
-			img_to_window(game, game->map.hero[0].ptr, game->player.pos.y,
-				game->player.pos.x);
-		if (game->player.curr_dir == 1)
-			img_to_window(game, game->map.hero[1].ptr, game->player.pos.y,
-				game->player.pos.x);
-		if (game->player.curr_dir == 2)
-			img_to_window(game, game->map.hero[2].ptr, game->player.pos.y,
-				game->player.pos.x);
-		if (game->player.curr_dir == 3)
-			img_to_window(game, game->map.hero[3].ptr, game->player.pos.y,
-				game->player.pos.x);
+		img_to_window(game, game->map.hero[game->player.curr_dir].ptr, 
+			game->player.pos.y, game->player.pos.x);
 		game->player.animation = 0;
 	}
 	else
 	{
-		if (game->player.curr_dir == 0)
-			img_to_window(game, game->map.hero_2[0].ptr, game->player.pos.y,
-				game->player.pos.x);
-		if (game->player.curr_dir == 1)
-			img_to_window(game, game->map.hero_2[1].ptr, game->player.pos.y,
-				game->player.pos.x);
-		if (game->player.curr_dir == 2)
-			img_to_window(game, game->map.hero_2[2].ptr, game->player.pos.y,
-				game->player.pos.x);
-		if (game->player.curr_dir == 3)
-			img_to_window(game, game->map.hero_2[3].ptr, game->player.pos.y,
-				game->player.pos.x);
+		img_to_window(game, game->map.hero_2[game->player.curr_dir].ptr, 
+			game->player.pos.y, game->player.pos.x);
 		game->player.animation = 1;
 	}
 }
 
 void	render_collectibles(t_game *game, bool start)
 {
-	t_coord	coord;
-	static int counter;
-	static int i;
+	t_coord		coord;
+	static int	counter;
+	static int	i;
 
 	counter++;
 	if (counter < 30000 && start == false)
@@ -71,20 +51,14 @@ void	render_collectibles(t_game *game, bool start)
 		while (game->map_arr[coord.y][coord.x])
 		{
 			if (game->map_arr[coord.y][coord.x] == 'C')
-			{
 				if (i == 0)
-					img_to_window(game, game->map.collectible[0].ptr, coord.y, coord.x);
-				if (i == 1)
-					img_to_window(game, game->map.collectible[1].ptr, coord.y, coord.x);
-				if (i == 2)
-					img_to_window(game, game->map.collectible[2].ptr, coord.y, coord.x);
-			}
+					img_to_window(game, game->map.collectible[i].ptr, 
+						coord.y, coord.x);
 			coord.x++;
 		}
 		coord.y++;
 	}
-	i++;
-	if (i == 3)
+	if (i++ == 3)
 		i = 0;
 	counter = 0;
 }
@@ -92,12 +66,13 @@ void	render_collectibles(t_game *game, bool start)
 // Function to render n enemies
 void	render_enemy(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < game->enemy_count)
 	{
-		img_to_window(game, game->map.enemy[0].ptr, game->enemy[i].pos.y, game->enemy[i].pos.x);
+		img_to_window(game, game->map.enemy[0].ptr, game->enemy[i].pos.y, 
+			game->enemy[i].pos.x);
 		i++;
 	}
 }

@@ -19,18 +19,14 @@
 # include <errno.h>
 # include <stdbool.h>
 
-# define BUF_SIZE 1000
-
-# ifdef __linux__
-#  include "../minilibx-linux/mlx.h"
-#  define OS_LINUX 1
-#  define W_KEY 119
-#  define S_KEY 115
-#  define A_KEY 97
-#  define D_KEY 100
-#  define ESC 65307
-#  define ON_DESTROY 17
-# endif
+// Keys definition
+# include "../minilibx-linux/mlx.h"
+# define W_KEY 119
+# define S_KEY 115
+# define A_KEY 97
+# define D_KEY 100
+# define ESC 65307
+# define ON_DESTROY 17
 
 // Define path for assets
 # define WALL_PATH	"./assets/tiles/wall.xpm"
@@ -43,6 +39,7 @@
 # define C_PATH "./assets/sprite/bomb.xpm"
 
 # define SPRITE_SIZE 32
+# define BUF_SIZE 1000
 
 typedef struct s_coord
 {
@@ -111,6 +108,7 @@ typedef struct s_game
 int		map_init(char **argv, t_game *game);
 void	set_window_size(t_game *game);
 void	player_pos(t_game *game);
+void	char_checker(t_game *game, char *buf);
 void	init_map_struct(t_game *game);
 
 // Map validation functions

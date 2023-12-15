@@ -42,9 +42,38 @@ void	update_map(t_game *game)
 		game->map_arr[coord.y][coord.x] = '0';
 	}
 	if (game->map_arr[coord.y][coord.x] == 'E' && game->player.coins == 
-		game->map.valid_collectibles)
-			exit_handler(2, game);
+			game->map.valid_collectibles)
+		exit_handler(2, game);
 	render_enemy(game);
+}
+
+// Helper function for key handler
+void	movement_handler(t_game *game, int dir)
+{
+	if (dir == UP_N)
+	{
+		game->player.curr_dir = UP_N;
+		if (game->player.valid_move.up)
+			update_pos(game, &(game->player.pos), 0);
+	}
+	if (dir == DOWN_N)
+	{
+		game->player.curr_dir = DOWN_N;
+		if (game->player.valid_move.down)
+			update_pos(game, &(game->player.pos), 1);
+	}
+	if (dir == LEFT_N)
+	{
+		game->player.curr_dir = LEFT_N;
+		if (game->player.valid_move.left)
+			update_pos(game, &(game->player.pos), 2);
+	}
+	if (dir == RIGHT_N)
+	{
+		game->player.curr_dir = RIGHT_N;
+		if (game->player.valid_move.right)
+			update_pos(game, &(game->player.pos), 3);
+	}
 }
 
 // Function for game logic based on key pressed
@@ -54,29 +83,13 @@ int	key_handler(int keysym, t_game *game)
 	if (keysym == ESC)
 		close_game(game);
 	else if (keysym == W_KEY || keysym == UP_KEY)
-	{
-		game->player.curr_dir = UP_N;
-		if (game->player.valid_move.up)
-			update_pos(game, &(game->player.pos), 0);
-	}
+		movement_handler(game, UP_N);
 	else if (keysym == S_KEY || keysym == DOWN_KEY)
-	{
-		game->player.curr_dir = DOWN_N;
-		if (game->player.valid_move.down)
-			update_pos(game, &(game->player.pos), 1);
-	}
+		movement_handler(game, DOWN_N);
 	else if (keysym == A_KEY || keysym == LEFT_KEY)
-	{
-		game->player.curr_dir = LEFT_N;
-		if (game->player.valid_move.left)
-		update_pos(game, &(game->player.pos), 2);
-	}
+		movement_handler(game, LEFT_N);
 	else if (keysym == D_KEY || keysym == RIGHT_KEY)
-	{
-		game->player.curr_dir = RIGHT_N;
-		if (game->player.valid_move.right)
-		update_pos(game, &(game->player.pos), 3);
-	}
+		movement_handler(game, RIGHT_N);
 	update_map(game);
 	return (0);
 }

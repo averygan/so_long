@@ -22,7 +22,9 @@ int	error_handler(int err, t_game *game)
 		ft_putstr_fd("Please input two arguments\n", 2);
 	if (err == 3)
 		ft_putstr_fd("Invalid ber file\n", 2);
-	if (err == 1 || err == 2 || err == 3)
+	if (err == 8)
+		ft_putstr_fd("Map contains invalid characters\n", 2);
+	if (err == 1 || err == 2 || err == 3 || err == 8)
 		exit (0);
 	if (err == 4)
 		ft_putstr_fd("Map does not meet requirements.\n", 2);

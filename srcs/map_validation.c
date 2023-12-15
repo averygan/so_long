@@ -116,7 +116,9 @@ void	path_checker(t_game *game, char ***tmp_map, int y, int x)
 void	map_validation(t_game *game)
 {
 	char	**tmp_map;
+	int		i;
 
+	i = 0;
 	rectangle_checker(game->map_arr, game);
 	wall_checker(game);
 	map_checker(game->map_arr, game);

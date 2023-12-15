@@ -11,7 +11,6 @@
 # **************************************************************************** #
 
 NAME	= so_long
-NAME_BONUS = so_long_bonus
 SRCS	= srcs/so_long.c srcs/utils.c srcs/assets.c srcs/render.c srcs/map.c \
 			srcs/map_validation.c srcs/free.c srcs/game_init.c srcs/move.c
 SRCS_BONUS = srcs_bonus/so_long_bonus.c srcs_bonus/utils_bonus.c srcs_bonus/assets_bonus.c \
@@ -46,7 +45,7 @@ ${NAME} : ${OBJS} ${LIBFT_BUILD} minilibx
 	@$(CC) ${CFLAGS} -c $< -o $@
 
 bonus : ${OBJS_BONUS} ${LIBFT_BUILD} minilibx
-	@$(CC) ${CFLAGS} ${OBJS_BONUS} ${LIBFT_BUILD} ${MINILIBX_FLAGS} -o ${NAME_BONUS}
+	@$(CC) ${CFLAGS} ${OBJS_BONUS} ${LIBFT_BUILD} ${MINILIBX_FLAGS} -o ${NAME}
 	@echo "so_long bonus compiled!"
 
 #libft

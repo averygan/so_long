@@ -13,7 +13,7 @@
 #include "../inc/so_long_bonus.h"
 
 // Init enemy positions and cur dir
-void enemy_init(t_game *game)
+void	enemy_init(t_game *game)
 {
 	int		i;
 	t_coord	coord;
@@ -52,7 +52,7 @@ void	struct_init(t_game *game)
 // Function to render move count
 void	render_moves(t_game *game)
 {
-	char *num;
+	char	*num;
 
 	num = ft_itoa(game->player.move_count);
 	mlx_string_put(game->mlx, game->window, 16, 16, WHITE, "Moves: ");
@@ -60,7 +60,10 @@ void	render_moves(t_game *game)
 	free(num);
 }
 
-// Loop hook function to update game -> render collectibles, check enemies and move enemies
+// Loop hook function to update game
+// -> render collectibles
+// -> check enemies
+// -> move enemies
 int	update_game(t_game *game)
 {
 	render_collectibles(game, false);
