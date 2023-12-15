@@ -15,7 +15,6 @@
 // Update position of player
 void	update_pos(t_game *game, t_coord *pos, int dir)
 {
-	game->player.curr_dir = dir;
 	if (dir == 0)
 		pos->y--;
 	else if (dir == 1)
@@ -26,20 +25,6 @@ void	update_pos(t_game *game, t_coord *pos, int dir)
 		pos->x++;
 	game->player.move_count++;
 	ft_printf("moves: %d\n", game->player.move_count);
-}
-
-void	ft_delay(int delay)
-{
-	int i;
-	int j;
-
-	i = 1;
-	j = 1;
-	while (i++ <= delay)
-	{
-		while (j++ <= delay)
-			asm("nop");
-	}
 }
 
 // Function to update map based on player's movement
@@ -60,7 +45,6 @@ void	update_map(t_game *game)
 		game->map.valid_collectibles)
 			exit_handler(2, game);
 	render_enemy(game);
-	//render_collectibles(game);
 }
 
 // Function for game logic based on key pressed
@@ -69,14 +53,30 @@ int	key_handler(int keysym, t_game *game)
 	update_legal_moves(game, game->player.pos, &game->player.valid_move);
 	if (keysym == ESC)
 		close_game(game);
-	else if (keysym == W_KEY && game->player.valid_move.up)
-		update_pos(game, &(game->player.pos), 0);
-	else if (keysym == S_KEY && game->player.valid_move.down)
-		update_pos(game, &(game->player.pos), 1);
-	else if (keysym == A_KEY && game->player.valid_move.left)
+	else if (keysym == W_KEY || keysym == UP_KEY)
+	{
+		game->player.curr_dir = UP_N;
+		if (game->player.valid_move.up)
+			update_pos(game, &(game->player.pos), 0);
+	}
+	else if (keysym == S_KEY || keysym == DOWN_KEY)
+	{
+		game->player.curr_dir = DOWN_N;
+		if (game->player.valid_move.down)
+			update_pos(game, &(game->player.pos), 1);
+	}
+	else if (keysym == A_KEY || keysym == LEFT_KEY)
+	{
+		game->player.curr_dir = LEFT_N;
+		if (game->player.valid_move.left)
 		update_pos(game, &(game->player.pos), 2);
-	else if (keysym == D_KEY && game->player.valid_move.right)
+	}
+	else if (keysym == D_KEY || keysym == RIGHT_KEY)
+	{
+		game->player.curr_dir = RIGHT_N;
+		if (game->player.valid_move.right)
 		update_pos(game, &(game->player.pos), 3);
+	}
 	update_map(game);
 	return (0);
 }

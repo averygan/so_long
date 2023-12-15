@@ -89,6 +89,19 @@ void	render_collectibles(t_game *game, bool start)
 	counter = 0;
 }
 
+// Function to render n enemies
+void	render_enemy(t_game *game)
+{
+	int i;
+
+	i = 0;
+	while (i < game->enemy_count)
+	{
+		img_to_window(game, game->map.enemy[0].ptr, game->enemy[i].pos.y, game->enemy[i].pos.x);
+		i++;
+	}
+}
+
 // If map is valid, render map
 void	render_map(t_game *game)
 {

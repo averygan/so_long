@@ -28,6 +28,10 @@
 #  define S_KEY 115
 #  define A_KEY 97
 #  define D_KEY 100
+#  define UP_KEY 65362
+#  define DOWN_KEY 65364
+#  define LEFT_KEY 65361
+#  define RIGHT_KEY 65363
 #  define ESC 65307
 #  define ON_DESTROY 17
 # endif

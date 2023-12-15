@@ -115,6 +115,7 @@ void	path_checker(t_game *game, char ***tmp_map, int y, int x)
 	path_checker(game, tmp_map, y, x - 1);
 }
 
+// Function to run map validation functions
 void	map_validation(t_game *game)
 {
 	char	**tmp_map;

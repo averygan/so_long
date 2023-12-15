@@ -12,6 +12,7 @@
 
 #include "../inc/so_long_bonus.h"
 
+// Initialize map variables
 void	init_map_struct(t_game *game)
 {
 	game->map.valid_path = 0;

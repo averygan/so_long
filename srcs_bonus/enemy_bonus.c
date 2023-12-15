@@ -27,6 +27,7 @@ void	check_enemy_collision(t_game *game)
 	}
 }
 
+// Update enemy's current position
 void	update_enemy_pos(t_enemy *enemy)
 {
 	if (enemy->curr_dir == UP_N)
@@ -39,6 +40,7 @@ void	update_enemy_pos(t_enemy *enemy)
 		enemy->pos.x++;
 }
 
+// If enemy meets a wall, change direction to next valid move
 void	change_enemy_dir(t_game *game, t_enemy *enemy)
 {
 	while (!enemy_valid_move(game, *enemy))
@@ -51,6 +53,7 @@ void	change_enemy_dir(t_game *game, t_enemy *enemy)
 	update_enemy_pos(enemy);
 }
 
+// Render enemy's new pos on map
 void	move_enemy(t_game *game)
 {
 	static int 	counter;
@@ -78,6 +81,7 @@ void	move_enemy(t_game *game)
 	counter = 0;
 }
 
+// Checks if enemy's next move is valid
 int		enemy_valid_move(t_game *game, t_enemy enemy)
 {
 	if (enemy.curr_dir == UP_N && !ft_strrchr("1CE", game->map_arr[enemy.pos.y - 1][enemy.pos.x]))
@@ -91,15 +95,3 @@ int		enemy_valid_move(t_game *game, t_enemy enemy)
 	return (0);
 }
 
-// Function to render n enemies
-void	render_enemy(t_game *game)
-{
-	int i;
-
-	i = 0;
-	while (i < game->enemy_count)
-	{
-		img_to_window(game, game->map.enemy[0].ptr, game->enemy[i].pos.y, game->enemy[i].pos.x);
-		i++;
-	}
-}

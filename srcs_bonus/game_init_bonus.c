@@ -12,7 +12,7 @@
 
 #include "../inc/so_long_bonus.h"
 
-// Init enemy
+// Init enemy positions and cur dir
 void enemy_init(t_game *game)
 {
 	int		i;
@@ -60,6 +60,7 @@ void	render_moves(t_game *game)
 	free(num);
 }
 
+// Loop hook function to update game -> render collectibles, check enemies and move enemies
 int	update_game(t_game *game)
 {
 	render_collectibles(game, false);
