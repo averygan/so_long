@@ -12,6 +12,24 @@
 
 #include "../inc/so_long_bonus.h"
 
+// Init height and width
+void	set_window_size(t_game *game)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (game->map_arr[y])
+	{
+		x = 0;
+		while (game->map_arr[y][x])
+			x++;
+		y++;
+	}
+	game->width = x;
+	game->height = y;
+}
+
 // Function to handle errors and redirect to exit
 int	error_handler(int err, t_game *game)
 {
@@ -24,7 +42,9 @@ int	error_handler(int err, t_game *game)
 		ft_putstr_fd("Invalid ber file\n", 2);
 	if (err == 8)
 		ft_putstr_fd("Map contains invalid characters\n", 2);
-	if (err == 1 || err == 2 || err == 3 || err == 8)
+	if (err == 9)
+		ft_putstr_fd("Empty line or file found.\n", 2);
+	if (err == 1 || err == 2 || err == 3 || err == 8 || err == 9)
 		exit (0);
 	if (err == 4)
 		ft_putstr_fd("Map does not meet requirements.\n", 2);

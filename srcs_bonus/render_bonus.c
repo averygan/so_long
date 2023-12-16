@@ -54,7 +54,8 @@ void	render_collectibles(t_game *game, bool start)
 		{
 			if (game->map_arr[coord.y][coord.x] == 'C')
 				if (i >= 0 && i <= 2)
-					img_to_window(game, game->map.collectible[i].ptr, coord.y, coord.x);
+					img_to_window(game, game->map.collectible[i].ptr, 
+						coord.y, coord.x);
 			coord.x++;
 		}
 		coord.y++;

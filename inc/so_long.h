@@ -106,9 +106,9 @@ typedef struct s_game
 
 // Map initialization and parsing functions
 int		map_init(char **argv, t_game *game);
-void	set_window_size(t_game *game);
 void	player_pos(t_game *game);
 void	char_checker(t_game *game, char *buf);
+void	empty_line_checker(t_game *game, char *buf);
 void	init_map_struct(t_game *game);
 
 // Map validation functions
@@ -120,6 +120,7 @@ void	rectangle_checker(char **map, t_game *game);
 
 // Game init functions
 int		game_init(t_game *game);
+void	set_window_size(t_game *game);
 
 // Movement functions
 void	update_legal_moves(t_game *game, t_coord pos, t_moves *valid_move);

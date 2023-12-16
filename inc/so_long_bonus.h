@@ -136,9 +136,9 @@ typedef struct s_game
 
 // Map initialization and parsing functions
 int		map_init(char **argv, t_game *game);
-void	set_window_size(t_game *game);
 void	player_pos(t_game *game);
 void	char_checker(t_game *game, char *buf);
+void	empty_line_checker(t_game *game, char *buf);
 void	init_map_struct(t_game *game);
 
 // Map validation functions
@@ -150,6 +150,8 @@ void	rectangle_checker(char **map, t_game *game);
 
 // Game init functions
 int		game_init(t_game *game);
+void	render_moves(t_game *game);
+int		update_game(t_game *game);
 void	struct_init(t_game *game);
 void	enemy_init(t_game *game);
 
@@ -165,6 +167,7 @@ int		close_game(t_game *game);
 int		error_handler(int err, t_game *game);
 void	exit_handler(int close, t_game *game);
 void	struct_init(t_game *game);
+void	set_window_size(t_game *game);
 
 // Render functions
 void	img_to_window(t_game *game, t_img *ptr, int y, int x);

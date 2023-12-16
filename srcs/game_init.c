@@ -21,6 +21,24 @@ void	struct_init(t_game *game)
 	game->player.coins = 0;
 }
 
+// Init height and width
+void	set_window_size(t_game *game)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (game->map_arr[y])
+	{
+		x = 0;
+		while (game->map_arr[y][x])
+			x++;
+		y++;
+	}
+	game->width = x;
+	game->height = y;
+}
+
 // Game init function to initialize mlx and game window
 int	game_init(t_game *game)
 {

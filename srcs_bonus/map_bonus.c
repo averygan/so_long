@@ -46,24 +46,6 @@ void	player_pos(t_game *game)
 	}
 }
 
-// Init height and width
-void	set_window_size(t_game *game)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (game->map_arr[y])
-	{
-		x = 0;
-		while (game->map_arr[y][x])
-			x++;
-		y++;
-	}
-	game->width = x;
-	game->height = y;
-}
-
 // Checks if characters in the map are valid
 void	char_checker(t_game *game, char *buf)
 {
@@ -93,6 +75,34 @@ void	char_checker(t_game *game, char *buf)
 	}
 }
 
+// Checks for empty file or empty line in file
+void	empty_line_checker(t_game *game, char *buf)
+{
+	int	i;
+	int	flag;
+
+	i = 0;
+	flag = 1;
+	while (buf[i])
+	{
+		if (buf[i] == '\n' && buf[i + 1] == '\n')
+		{
+			free(buf);
+			error_handler(9, game);
+		}
+		i++;
+	}
+	i = -1;
+	while (buf[++i])
+		if (buf[i] != '\n')
+			flag = 0;
+	if (flag)
+	{
+		free(buf);
+		error_handler(9, game);
+	}
+}
+
 // Function to initialize map
 // -> Read .ber file
 // -> malloc map_arr
@@ -114,6 +124,7 @@ int	map_init(char **argv, t_game *game)
 	bytes_read = read(fd, buf, BUF_SIZE);
 	if (bytes_read == -1 || bytes_read == 0)
 		return (free(buf), -1);
+	empty_line_checker(game, buf);
 	char_checker(game, buf);
 	game->map_arr = ft_split(buf, '\n');
 	set_window_size(game);
