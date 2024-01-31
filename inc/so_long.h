@@ -20,13 +20,24 @@
 # include <stdbool.h>
 
 // Keys definition
-# include "../minilibx-linux/mlx.h"
-# define W_KEY 119
-# define S_KEY 115
-# define A_KEY 97
-# define D_KEY 100
-# define ESC 65307
-# define ON_DESTROY 17
+#ifdef __linux__
+#  include "../minilibx-linux/mlx.h"
+#  define OS_LINUX 1
+#  define W_KEY 119
+#  define S_KEY 115
+#  define A_KEY 97
+#  define D_KEY 100
+#  define ESC 65307
+#  define ON_DESTROY 17
+# elif __APPLE__
+#  define OS_LINUX 0
+#  define W_KEY 13
+#  define S_KEY 1
+#  define A_KEY 0
+#  define D_KEY 2
+#  define ESC 53
+#  define ON_DESTROY 17
+# include "../minilibx-macos/mlx.h"
 
 // Define path for assets
 # define WALL_PATH	"./assets/tiles/wall.xpm"

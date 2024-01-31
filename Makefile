@@ -31,9 +31,15 @@ LIBFT_DIR = ./libft
 LIBFT_BUILD := ./libft/libft.a
 
 #minilibx
-MINILIBX_DIR = ./minilibx-linux/
-MINILIBX = $(addprefix $(MINILIBX_DIR), libmlx.a)
-MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lbsd
+ifeq ($(shell uname), Linux)
+	MINILIBX_DIR = ./minilibx-linux/
+	MINILIBX = $(addprefix $(MINILIBX_DIR), libmlx.a)
+	MINILIBX_FLAGS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lbsd
+else
+	MINILIBX_DIR = ./minilibx-macos/
+	MINILIBX = $(addprefix $(MINILIBX_DIR), libmlx.a)
+	MINILIBX_FLAGS = -L $(MINILIBX_DIR) -lmlx -L/usr/X11/lib -lXext -lX11 \
+	-framework OpenGL -framework AppKit
 
 all: ${NAME}
 

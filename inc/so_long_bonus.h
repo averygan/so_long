@@ -58,7 +58,7 @@
 # define RIGHT_N 3
 # define ENEMY_LIMIT 30
 # define WHITE 0xFFFFFF
-# define ENEMY_SPEED 10000
+# define ENEMY_SPEED 8000
 
 typedef struct s_coord
 {
